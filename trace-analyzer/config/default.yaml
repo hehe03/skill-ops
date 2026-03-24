@@ -1,0 +1,74 @@
+databases:
+  trace_dir: "data/it_support_traces"
+  output_dir: "output/results"
+
+detectors:
+  rule:
+    enabled: true
+    rules:
+      - name: high_latency
+        field: "latency_ms"
+        operator: "gt"
+        threshold: 10000
+        severity: "warning"
+      - name: excessive_tokens
+        field: "total_tokens"
+        operator: "gt"
+        threshold: 5000
+        severity: "warning"
+      - name: error_flag
+        field: "has_error"
+        operator: "eq"
+        value: true
+        severity: "critical"
+      - name: empty_response
+        field: "response_length"
+        operator: "eq"
+        value: 0
+        severity: "critical"
+      - name: excessive_tool_calls
+        field: "tool_count"
+        operator: "gt"
+        threshold: 20
+        severity: "warning"
+
+  statistical:
+    enabled: true
+    methods:
+      - name: zscore
+        fields: ["duration_ms", "total_tokens", "response_length"]
+        threshold: 3.0
+      - name: iqr
+        fields: ["duration_ms", "total_tokens"]
+        multiplier: 1.5
+
+  content_pattern:
+    enabled: true
+
+  ai:
+    enabled: false
+    provider: "openrouter"  # openai, glm, openrouter(minimax/minimax-m2.5)
+    model: "minimax/minimax-m2.5:free"
+    api_key: "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"  # 直接填写 API Key，或使用 api_key_env 从环境变量读取
+    # api_key_env: "OPENAI_API_KEY"  # 环境变量名
+    # base_url: "https://api.openai.com/v1"  # 可选，自定义端点
+    criteria:
+      - name: hallucination
+        prompt_template: "Check if the following response contains hallucinated information (fabricated facts):\n{response}"
+      - name: logical_error
+        prompt_template: "Check if the following response contains logical errors:\n{response}"
+      - name: safety_concern
+        prompt_template: "Check if the following response contains safety concerns, harmful content, or policy violations:\n{response}"
+      - name: incomplete_answer
+        prompt_template: "Check if the following response is incomplete or avoids answering the question:\n{response}"
+    batch_size: 10
+
+analyzer:
+  parallel_workers: 4
+  batch_size: 100
+  save_intermediate: true
+
+report:
+  format: "json"
+  include_summary: true
+  include_details: true

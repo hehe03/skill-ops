@@ -1,0 +1,760 @@
+{
+  "timestamp": "2026-03-24T16:21:53.062955",
+  "total_traces": 54,
+  "processing_time_seconds": 0.01399540901184082,
+  "stats": {
+    "total_traces": 54,
+    "traces_with_issues": 25,
+    "total_issues": 52,
+    "by_severity": {
+      "warning": 51,
+      "critical": 1
+    },
+    "by_type": {
+      "rule_violation": 3,
+      "statistical_anomaly": 4,
+      "content_pattern": 45
+    }
+  },
+  "issues": [
+    {
+      "trace_id": "trace_anomaly_000",
+      "issue_type": "rule_violation",
+      "severity": "warning",
+      "detector": "rule_detector",
+      "message": "Rule 'excessive_tokens' violated: total_tokens gt 5000",
+      "details": {
+        "rule": {
+          "name": "excessive_tokens",
+          "field": "total_tokens",
+          "operator": "gt",
+          "threshold": 5000,
+          "severity": "warning"
+        },
+        "actual_value": 7850
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_001",
+      "issue_type": "rule_violation",
+      "severity": "critical",
+      "detector": "rule_detector",
+      "message": "Rule 'error_flag' violated: has_error eq True",
+      "details": {
+        "rule": {
+          "name": "error_flag",
+          "field": "has_error",
+          "operator": "eq",
+          "value": true,
+          "severity": "critical"
+        },
+        "actual_value": true
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_002",
+      "issue_type": "rule_violation",
+      "severity": "warning",
+      "detector": "rule_detector",
+      "message": "Rule 'excessive_tokens' violated: total_tokens gt 5000",
+      "details": {
+        "rule": {
+          "name": "excessive_tokens",
+          "field": "total_tokens",
+          "operator": "gt",
+          "threshold": 5000,
+          "severity": "warning"
+        },
+        "actual_value": 7583
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_000",
+      "issue_type": "statistical_anomaly",
+      "severity": "warning",
+      "detector": "statistical_detector",
+      "message": "Statistical anomaly detected: total_tokens value 7850.00 has z-score 5.05",
+      "details": {
+        "field": "total_tokens",
+        "zscore": 5.052607632643476,
+        "mean": 1108.8301886792453,
+        "stdev": 1334.1961817434533
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_002",
+      "issue_type": "statistical_anomaly",
+      "severity": "warning",
+      "detector": "statistical_detector",
+      "message": "Statistical anomaly detected: total_tokens value 7583.00 has z-score 4.85",
+      "details": {
+        "field": "total_tokens",
+        "zscore": 4.852487137881529,
+        "mean": 1108.8301886792453,
+        "stdev": 1334.1961817434533
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_000",
+      "issue_type": "statistical_anomaly",
+      "severity": "warning",
+      "detector": "statistical_detector",
+      "message": "IQR anomaly detected: total_tokens value 7850.00 outside [276.25, 1514.25]",
+      "details": {
+        "field": "total_tokens",
+        "q1": 740.5,
+        "q3": 1050.0,
+        "iqr": 309.5
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_002",
+      "issue_type": "statistical_anomaly",
+      "severity": "warning",
+      "detector": "statistical_detector",
+      "message": "IQR anomaly detected: total_tokens value 7583.00 outside [276.25, 1514.25]",
+      "details": {
+        "field": "total_tokens",
+        "q1": 740.5,
+        "q3": 1050.0,
+        "iqr": 309.5
+      }
+    },
+    {
+      "trace_id": "trace_0000",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'account_management' may not fit the issue",
+      "details": {
+        "query": "邮件收发异常",
+        "skill": "account_management"
+      }
+    },
+    {
+      "trace_id": "trace_0006",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'network_diagnostics' may not fit the issue",
+      "details": {
+        "query": "软件无法启动",
+        "skill": "network_diagnostics"
+      }
+    },
+    {
+      "trace_id": "trace_0007",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0008",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0009",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0011",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'printer_config' may not fit the issue",
+      "details": {
+        "query": "网络连接不上",
+        "skill": "printer_config"
+      }
+    },
+    {
+      "trace_id": "trace_0014",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'account_management' may not fit the issue",
+      "details": {
+        "query": "软件无法启动",
+        "skill": "account_management"
+      }
+    },
+    {
+      "trace_id": "trace_0017",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'network_diagnostics' may not fit the issue",
+      "details": {
+        "query": "软件无法启动",
+        "skill": "network_diagnostics"
+      }
+    },
+    {
+      "trace_id": "trace_0019",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0021",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'software_installer' may not fit the issue",
+      "details": {
+        "query": "邮件收发异常",
+        "skill": "software_installer"
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'vpn_connector' may not fit the issue",
+      "details": {
+        "query": "软件无法启动",
+        "skill": "vpn_connector"
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'software_installer' may not fit the issue",
+      "details": {
+        "query": "网络连接不上",
+        "skill": "software_installer"
+      }
+    },
+    {
+      "trace_id": "trace_0025",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0028",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0031",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0034",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'email_fixer' may not fit the issue",
+      "details": {
+        "query": "软件无法启动",
+        "skill": "email_fixer"
+      }
+    },
+    {
+      "trace_id": "trace_0036",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'security_reset' may not fit the issue",
+      "details": {
+        "query": "网络连接不上",
+        "skill": "security_reset"
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'account_management' may not fit the issue",
+      "details": {
+        "query": "网络连接不上",
+        "skill": "account_management"
+      }
+    },
+    {
+      "trace_id": "trace_0039",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_0040",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'network_diagnostics' may not fit the issue",
+      "details": {
+        "query": "邮件收发异常",
+        "skill": "network_diagnostics"
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'vpn_connector' may not fit the issue",
+      "details": {
+        "query": "邮件收发异常",
+        "skill": "vpn_connector"
+      }
+    },
+    {
+      "trace_id": "trace_0044",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'account_management' may not fit the issue",
+      "details": {
+        "query": "软件无法启动",
+        "skill": "account_management"
+      }
+    },
+    {
+      "trace_id": "trace_0045",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'email_fixer' may not fit the issue",
+      "details": {
+        "query": "网络连接不上",
+        "skill": "email_fixer"
+      }
+    },
+    {
+      "trace_id": "trace_0046",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'windows_troubleshooting' may not fit the issue",
+      "details": {
+        "query": "邮件收发异常",
+        "skill": "windows_troubleshooting"
+      }
+    },
+    {
+      "trace_id": "trace_0048",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'software_installer' may not fit the issue",
+      "details": {
+        "query": "邮件收发异常",
+        "skill": "software_installer"
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'software_installer' may not fit the issue",
+      "details": {
+        "query": "邮件收发异常",
+        "skill": "software_installer"
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Excessive empty argument tool calls: 5 calls with empty arguments",
+      "details": {
+        "empty_calls": 5
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_000",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "trace_anomaly_001",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Template response detected: response uses generic template",
+      "details": {
+        "template_matches": 5,
+        "indicators": [
+          "首先请确认",
+          "如需进一步帮助",
+          "请点击「转人工服务」",
+          "尝试清除",
+          "检查本地网络"
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Tool execution errors: 1 tools failed",
+      "details": {
+        "error_count": 1,
+        "errors": [
+          {
+            "tool": "database_query",
+            "error": "Error: Connection timeout after 30s"
+          }
+        ]
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Skill mismatch: loaded 'vpn_connector' may not fit the issue",
+      "details": {
+        "query": "软件无法启动",
+        "skill": "vpn_connector"
+      }
+    },
+    {
+      "trace_id": "unknown",
+      "issue_type": "content_pattern",
+      "severity": "warning",
+      "detector": "content_pattern_detector",
+      "message": "Excessive empty argument tool calls: 5 calls with empty arguments",
+      "details": {
+        "empty_calls": 5
+      }
+    }
+  ]
+}
