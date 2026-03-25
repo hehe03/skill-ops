@@ -1,0 +1,16 @@
+provider: openrouter
+enabled: true
+api_key: "<YOUR_API_KEY>"
+base_url: "https://openrouter.ai/api/v1/chat/completions"
+openrouter_model: "claude-3"
+glm_base_url: "https://glm.example/api/v1/generate"
+glm_model: "glm-130b"
+strategies:
+  - name: root_cause_hypotheses
+    enabled: true
+  - name: data_quality_improvement
+    enabled: true
+  - name: runtime_tuning
+    enabled: true
+  - name: patch_generation
+    enabled: true

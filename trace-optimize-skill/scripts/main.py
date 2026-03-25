@@ -20,8 +20,18 @@ from pathlib import Path
 from typing import List, Dict
 
 import numpy as np
+yaml_mod = None
 
 from scripts.anomaly_detection import detect_anomalies
+from llm_engine import LLMClient
+import importlib
+try:
+    from pathlib import Path as _Path
+    import yaml as yaml_mod
+    YAML_AVAILABLE = True
+except Exception:
+    yaml_mod = None
+    YAML_AVAILABLE = False
 
 
 def load_json(path: Path) -> dict:
@@ -70,8 +80,27 @@ def extract_features(traces: List[Dict]) -> List[Dict]:
     return features
 
 
+def _load_llm_config_yaml() -> dict:
+    # Look for llm_config.yaml in the trace-optimize-skill root (sibling to scripts/)
+    try:
+        base_dir = Path(__file__).resolve().parent.parent  # trace-optimize-skill
+        config_path = base_dir / "llm_config.yaml"
+        if config_path.exists() and YAML_AVAILABLE and yaml_mod is not None:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                return yaml_mod.safe_load(f) or {}
+    except Exception:
+        pass
+    return {}
+
+
 def llm_assist(anomalies: List[Dict], context: str) -> str:
-    use_llm = os.environ.get("TRACE_OPTIMIZE_USE_LLM", "0") == "1"
+    # Try to load YAML config first
+    config = {}
+    if YAML_AVAILABLE:
+        config = _load_llm_config_yaml() or {}
+    # If config loaded and enabled, use LLM; otherwise fall back to heuristic
+    use_llm = (config.get("enabled", True) and
+               config.get("provider") in ("openrouter", "glm", "trace-llm"))
     if not anomalies:
         return "No anomalies detected; traditional trace optimization suggestions suffice."
     if not use_llm:
@@ -81,18 +110,10 @@ def llm_assist(anomalies: List[Dict], context: str) -> str:
             f"2) improve error handling and retry policies; 3) enhance trace granularity for better diagnostics."
         )
         return suggest
+    # Use LLM via LLMClient
     try:
-        import requests
-        api_url = os.environ.get("TRACE_OPTIMIZE_LLM_API", "https://example-llm/api/analyze")
-        payload = {
-            "context": context,
-            "anomalies": anomalies,
-        }
-        resp = requests.post(api_url, json=payload, timeout=15)
-        if resp.ok:
-            return resp.text
-        else:
-            return "LLM analysis failed; fallback to heuristic suggestions."
+        llm_client = LLMClient(config or {})
+        return llm_client.generate_insights(anomalies, context)
     except Exception:
         return "LLM integration error; fallback to heuristic suggestions."
 

@@ -2,7 +2,7 @@
 name: trace-optimize-skill
 version: 0.1.0
 description: >
-  Analyzes a working skill's traces and the output from a trace analyzer to identify anomalies and generate actionable improvements. Combines traditional methods with large-model reasoning to produce an improved skill and a comprehensive improvement report.
+  基于一个工作技能、该技能产生的 trace 数据以及 trace 分析结果，进行深度分析，结合传统方法与大模型策略，提出对工作技能的改进建议，输出改进后的技能包与改进报告。
 entry_point: scripts/main.py
 language: python
 inputs:
@@ -23,29 +23,28 @@ llm_api_env: TRACE_OPTIMIZE_USE_LLM
 ---
 # trace-optimize-skill
 
-Overview
-- A Claude Code compliant skill that analyzes a working skill's trace data and the output from a trace analyzer to identify anomalies, and generates actionable improvements blending traditional methods with large-model reasoning.
-- Produces an improved version of the working skill and a comprehensive improvement report.
+概述
+- 通过分析工作技能、该技能产生的 trace 数据以及 trace 分析结果，进行深度分析；在需要时调用大模型以获得更多洞察。
+-  结合传统方法与大模型策略，给出对工作技能的改进建议，并输出改进后的技能包与改进报告。
 
-Usage (command-line)
-- Run in project root:
-  python scripts/main.py --work-skill-path <path-to-working-skill> --trace-data-path <path-to-trace-data> --analysis-results-path <path-to-analysis-results> --output-dir <path-to-output>
+用法（命令行）
+- 在项目根目录执行：
+  python scripts/main.py --work-skill-path <工作技能路径> --trace-data-path <trace 数据路径> --analysis-results-path <分析结果路径> --output-dir <输出路径>
 
-Inputs
-- work_skill_path: Path to the existing skill to optimize
-- trace_data_path: Path where trace data generated during skill execution is stored
-- analysis_results_path: Path to analysis results produced by the trace analyzer
+输入
+- work_skill_path：要优化的工作技能代码/目录路径
+- trace_data_path：该技能执行过程中产生的 trace 数据
+- analysis_results_path：trace 分析工具生成的分析结果
 
-Outputs
-- improved_skill_path: Directory containing the improved skill (copied from the original skill with patch notes)
-- improvement_report_path: Markdown report describing the improvements
-- summary_json_path: Structured summary of the analysis and improvements
+输出
+- improved_skill_path：改进后的技能包，复制自原技能并附上 patch notes
+- improvement_report_path：改进报告
+- summary_json_path：分析与改进的结构化摘要
 
-Claude Code compliance notes
-- skill.md documents the intent, inputs/outputs, and usage so automated tooling (Claude Code/OpenCLAW) can load and execute the skill.
-- A scripts/ folder is used to host executable logic (main.py) and helper modules; the CLI entry point is main.py at the project root (as requested).
-- The tool is designed to be auto-loadable by Claude Code/OpenCLAW in typical scans of root-level skills.
+Claude Code 合规要点
+-  skill.md 提供结构化元数据与中文说明，方便 Claude Code/OpenCLAW 自动加载与执行。
+-  scripts/ 文件夹承载实现逻辑，入口点为 scripts/main.py。
+-  技能设计为可被根目录技能加载器自动发现与执行。
 
-Notes
-- There is an optional LL model augmentation path controlled by environment variable TRACE_OPTIMIZE_USE_LLM.
-- If you want to enable the LLM-based deep-dive, set TRACE_OPTIMIZE_USE_LLM=1 and provide TRACE_OPTIMIZE_USE_LLM_API with the endpoint.
+注意
+- 如启用大模型辅助，请通过环境变量 TRACE_OPTIMIZE_USE_LLM 以及 llm_config.yaml 进行配置。
