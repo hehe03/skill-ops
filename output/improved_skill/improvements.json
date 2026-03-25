@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-03-23T18:33:41.082977",
+  "improvements_count": 3,
+  "details": [
+    {
+      "category": "tool",
+      "target": "database_query",
+      "action": "improve_error_handling",
+      "description": "优化 database_query 工具的错误处理",
+      "priority": "high",
+      "code_changes": "\n    def execute(self, **kwargs) -> Any:\n        try:\n            # 添加重试机制\n            max_retries = 3\n            for attempt in range(max_retries):\n                try:\n                    return self._execute_impl(**kwargs)\n                except Exception as e:\n                    if attempt == max_retries - 1:\n                        raise\n                    await asyncio.sleep(0.5 * (attempt + 1))\n        except Exception as e:\n            return {\"error\": str(e), \"fallback\": True}\n"
+    },
+    {
+      "category": "flow",
+      "target": "workflow",
+      "action": "add_fallback",
+      "description": "添加降级机制，数据库/网关失败时使用备选方案",
+      "priority": "high",
+      "code_changes": "\n    async def _fallback_execute(self, tool_name: str, **kwargs):\n        \"\"\"降级执行：当主工具失败时使用备选\"\"\"\n        fallback_map = {\n            \"database_query\": \"cache_lookup\",\n            \"api_gateway\": \"direct_call\"\n        }\n        fallback_tool = fallback_map.get(tool_name)\n        if fallback_tool:\n            return await self._execute_tool(fallback_tool, **kwargs)\n        return {\"error\": \"no_fallback_available\"}\n"
+    },
+    {
+      "category": "performance",
+      "target": "agent",
+      "action": "add_timeout",
+      "description": "为所有工具调用添加超时控制",
+      "priority": "medium",
+      "code_changes": "\n    async def execute_with_timeout(self, tool, kwargs, timeout=5):\n        \"\"\"带超时的工具执行\"\"\"\n        try:\n            return await asyncio.wait_for(tool.execute(**kwargs), timeout=timeout)\n        except asyncio.TimeoutError:\n            return {\"error\": \"timeout\", \"tool\": tool.name}\n"
+    }
+  ]
+}

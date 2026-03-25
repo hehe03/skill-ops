@@ -1,64 +1,51 @@
 ---
-name: trace-diagnosis-advisor
-description: 根据trace数据诊断结果，分析根因并重构优化IT客服skill。当需要优化it-customer-service skill时触发，输入原始skill代码、trace数据文件、trace-analyzer-skill分析报告，输出改进建议和优化后的skill代码。
+name: trace-optimize-skill
+version: 0.1.0
+description: >
+  Analyzes a working skill's traces and the output from a trace analyzer to identify anomalies and generate actionable improvements. Combines traditional methods with large-model reasoning to produce an improved skill and a comprehensive improvement report.
+entry_point: scripts/main.py
+language: python
+inputs:
+  - work_skill_path
+  - trace_data_path
+  - analysis_results_path
+outputs:
+  - improved_skill_path
+  - improvement_report_path
+  - summary_json_path
+dependencies:
+  python: ">=3.10"
+  pandas: ">=1.5"
+  numpy: ">=1.21"
+  requests: ">=2.28"
+LLM_support: true
+llm_api_env: TRACE_OPTIMIZE_USE_LLM
 ---
+# trace-optimize-skill
 
-# Trace Diagnosis Advisor Skill
+Overview
+- A Claude Code compliant skill that analyzes a working skill's trace data and the output from a trace analyzer to identify anomalies, and generates actionable improvements blending traditional methods with large-model reasoning.
+- Produces an improved version of the working skill and a comprehensive improvement report.
 
-根据trace数据分析结果，对IT客服skill进行根因分析和代码优化。
+Usage (command-line)
+- Run in project root:
+  python scripts/main.py --work-skill-path <path-to-working-skill> --trace-data-path <path-to-trace-data> --analysis-results-path <path-to-analysis-results> --output-dir <path-to-output>
 
-## 触发条件
+Inputs
+- work_skill_path: Path to the existing skill to optimize
+- trace_data_path: Path where trace data generated during skill execution is stored
+- analysis_results_path: Path to analysis results produced by the trace analyzer
 
-- 需要优化 it-customer-service skill 时
-- trace-analyzer-skill 分析发现问题后
-- 用户要求改进skill配置
+Outputs
+- improved_skill_path: Directory containing the improved skill (copied from the original skill with patch notes)
+- improvement_report_path: Markdown report describing the improvements
+- summary_json_path: Structured summary of the analysis and improvements
 
-## 输入
+Claude Code compliance notes
+- skill.md documents the intent, inputs/outputs, and usage so automated tooling (Claude Code/OpenCLAW) can load and execute the skill.
+- A scripts/ folder is used to host executable logic (main.py) and helper modules; the CLI entry point is main.py at the project root (as requested).
+- The tool is designed to be auto-loadable by Claude Code/OpenCLAW in typical scans of root-level skills.
 
-1. **原始skill目录**: `it-customer-service-skill/`
-2. **trace数据目录**: `data/it_support_traces/` (skill根目录)
-3. **分析报告** (可选): trace-analyzer-skill 输出的JSON报告
-
-## 工作流程
-
-```
-1. 加载原始skill代码
-2. 分析trace数据统计
-3. 读取trace-analyzer-skill报告
-4. 根因分析
-5. 生成改进建议
-6. 输出优化后的skill
-```
-
-## 输出
-
-- `diagnosis_report.json` - 诊断报告
-- `improved_skill/` - 改进后的skill代码
-
-## 使用方式
-
-```bash
-# 进入skill目录
-cd trace-diagnosis-skill
-
-# 完整分析并优化
-python scripts/optimize.py <skill_dir> <trace_dir> <analysis_report_dir>
-
-# 示例
-python scripts/optimize.py ../it-customer-service-skill/ ../trace-analyzer-skill/data/it_support_traces/ ../trace-analyzer-skill/output/results/
-```
-
-或加载skill后：
-```
-使用trace-diagnosis-advisor优化skill，输入: it-customer-service-skill/
-```
-
-## 目录结构
-
-```
-trace-diagnosis-skill/
-├── SKILL.md              # Skill定义(前置YAML元数据)
-└── scripts/
-    ├── optimize.py        # 诊断优化脚本
-    └── diagnose.py       # 诊断脚本
-```
+Notes
+- There is an optional LL model augmentation path controlled by environment variable TRACE_OPTIMIZE_USE_LLM.
+- If you want to enable the LLM-based deep-dive, set TRACE_OPTIMIZE_USE_LLM=1 and provide TRACE_OPTIMIZE_USE_LLM_API with the endpoint.

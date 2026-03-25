@@ -1,0 +1,23 @@
+{
+  "name": "trace-optimize-skill",
+  "version": "0.1.0",
+  "description": "Analyzes working skill traces and trace-analysis results to propose improvements, using traditional methods plus LLM-based insights. Produces an improved skill package and a detailed improvement report.",
+  "entry_point": "scripts/main.py",
+  "language": "python",
+  "dependencies": {
+    "python": ">=3.10",
+    "pandas": ">=1.5",
+    "numpy": ">=1.21",
+    "requests": ">=2.28"
+  },
+  "inputs": [
+    "work_skill_path",
+    "trace_data_path",
+    "analysis_results_path"
+  ],
+  "outputs": [
+    "improved_skill_path",
+    "improvement_report_path",
+    "summary_json_path"
+  ]
+}

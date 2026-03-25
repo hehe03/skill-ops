@@ -1,0 +1,122 @@
+{
+  "generated_at": "2026-03-23T18:33:41.073245",
+  "input": {
+    "skill_dir": "../it-customer-service-skill",
+    "trace_dir": "../trace-analyzer/data/it_support_traces",
+    "trace_count": 53
+  },
+  "analysis": {
+    "tool_stats": {
+      "total_calls": 424,
+      "by_tool": {
+        "query_rewriter": 54,
+        "intent_classifier": 53,
+        "skill_orchestrator": 54,
+        "semantic_memory_retrieval": 54,
+        "case_base_search": 41,
+        "knowledge_graph_query": 27,
+        "read_file": 54,
+        "llm_response_generator": 54,
+        "web_search": 31,
+        "database_query": 1,
+        "api_gateway": 1
+      },
+      "errors_by_tool": {
+        "database_query": 1
+      },
+      "error_rates": {
+        "query_rewriter": 0.0,
+        "intent_classifier": 0.0,
+        "skill_orchestrator": 0.0,
+        "semantic_memory_retrieval": 0.0,
+        "case_base_search": 0.0,
+        "knowledge_graph_query": 0.0,
+        "read_file": 0.0,
+        "llm_response_generator": 0.0,
+        "web_search": 0.0,
+        "database_query": 1.0,
+        "api_gateway": 0.0
+      }
+    },
+    "intent_stats": {
+      "distribution": {
+        "software_issue": 12,
+        "account_issue": 14,
+        "permission_issue": 15,
+        "network_issue": 12
+      },
+      "total": 53
+    },
+    "flow_stats": {
+      "flows": {
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> case_base_search -> case_base_search -> knowledge_graph_query -> knowledge_graph_query -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 7,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> case_base_search -> case_base_search -> knowledge_graph_query -> knowledge_graph_query -> web_search -> web_search -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 11,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> case_base_search -> case_base_search -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 9,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> web_search -> web_search -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 3,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> knowledge_graph_query -> knowledge_graph_query -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 4,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> case_base_search -> case_base_search -> web_search -> web_search -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 10,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> knowledge_graph_query -> knowledge_graph_query -> web_search -> web_search -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 3,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> read_file -> read_file -> llm_response_generator -> llm_response_generator": 3,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> case_base_search -> case_base_search -> knowledge_graph_query -> knowledge_graph_query -> web_search -> web_search -> read_file -> read_file -> web_search -> case_base_search -> semantic_memory_retrieval -> skill_orchestrator -> web_search -> llm_response_generator -> web_search -> web_search -> database_query -> query_rewriter -> llm_response_generator -> llm_response_generator": 1,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> case_base_search -> case_base_search -> read_file -> read_file -> database_query -> database_query -> llm_response_generator -> llm_response_generator": 1,
+        "query_rewriter -> query_rewriter -> intent_classifier -> intent_classifier -> skill_orchestrator -> skill_orchestrator -> semantic_memory_retrieval -> semantic_memory_retrieval -> case_base_search -> case_base_search -> web_search -> web_search -> read_file -> read_file -> query_rewriter -> semantic_memory_retrieval -> web_search -> api_gateway -> execute_shell -> knowledge_graph_query -> execute_shell -> web_search -> semantic_memory_retrieval -> read_file -> llm_response_generator -> llm_response_generator": 1
+      },
+      "unique_flows": 11
+    },
+    "issues_found": 1,
+    "analyzer_report": {
+      "total_traces": 54,
+      "traces_with_issues": 3,
+      "total_issues": 7,
+      "by_severity": {
+        "warning": 6,
+        "critical": 1
+      },
+      "by_type": {
+        "rule_violation": 3,
+        "statistical_anomaly": 4
+      }
+    }
+  },
+  "root_causes": [
+    {
+      "issue": "发现 1 个工具执行错误",
+      "cause": "工具错误处理不完善"
+    },
+    {
+      "issue": "部分工具调用率低",
+      "cause": "流程覆盖不完整"
+    }
+  ],
+  "improvements": [
+    {
+      "category": "tool",
+      "target": "database_query",
+      "action": "improve_error_handling",
+      "description": "优化 database_query 工具的错误处理",
+      "priority": "high",
+      "code_changes": "\n    def execute(self, **kwargs) -> Any:\n        try:\n            # 添加重试机制\n            max_retries = 3\n            for attempt in range(max_retries):\n                try:\n                    return self._execute_impl(**kwargs)\n                except Exception as e:\n                    if attempt == max_retries - 1:\n                        raise\n                    await asyncio.sleep(0.5 * (attempt + 1))\n        except Exception as e:\n            return {\"error\": str(e), \"fallback\": True}\n"
+    },
+    {
+      "category": "flow",
+      "target": "workflow",
+      "action": "add_fallback",
+      "description": "添加降级机制，数据库/网关失败时使用备选方案",
+      "priority": "high",
+      "code_changes": "\n    async def _fallback_execute(self, tool_name: str, **kwargs):\n        \"\"\"降级执行：当主工具失败时使用备选\"\"\"\n        fallback_map = {\n            \"database_query\": \"cache_lookup\",\n            \"api_gateway\": \"direct_call\"\n        }\n        fallback_tool = fallback_map.get(tool_name)\n        if fallback_tool:\n            return await self._execute_tool(fallback_tool, **kwargs)\n        return {\"error\": \"no_fallback_available\"}\n"
+    },
+    {
+      "category": "performance",
+      "target": "agent",
+      "action": "add_timeout",
+      "description": "为所有工具调用添加超时控制",
+      "priority": "medium",
+      "code_changes": "\n    async def execute_with_timeout(self, tool, kwargs, timeout=5):\n        \"\"\"带超时的工具执行\"\"\"\n        try:\n            return await asyncio.wait_for(tool.execute(**kwargs), timeout=timeout)\n        except asyncio.TimeoutError:\n            return {\"error\": \"timeout\", \"tool\": tool.name}\n"
+    }
+  ],
+  "summary": {
+    "total_improvements": 3,
+    "high_priority": 2,
+    "medium_priority": 1
+  }
+}
